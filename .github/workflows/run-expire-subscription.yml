@@ -4,7 +4,7 @@ on:
   # ⏰ 注释掉定时触发，当前只支持手动运行
   # schedule:
   #   - cron: '0 0 * * *'  # 每天 UTC 0 点触发
-  workflow_dispatch:       # ✅ 允许手动运行
+  workflow_dispatch:  # ✅ 手动触发
 
 jobs:
   run:
@@ -20,15 +20,16 @@ jobs:
         with:
           node-version: '18'
 
-      - name: 📦 Install Supabase CLI
-        run: npm install -g supabase
+      - name: 📦 Install Supabase CLI (official way)
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
 
-      - name: 🔐 Set up environment variables
+      - name: 🔐 Link Supabase Project
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
-        run: |
-          supabase link --project-ref $SUPABASE_PROJECT_ID
+        run: supabase link --project-ref $SUPABASE_PROJECT_ID
 
       - name: 🚀 Invoke Supabase Edge Function
         run: |
