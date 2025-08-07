@@ -1,0 +1,43 @@
+# macOS 系统文件
+.DS_Store
+
+# Node / Deno 缓存
+node_modules/
+npm-debug.log
+deno.lock
+deno.json
+
+# Python 缓存（如果你用到）
+__pycache__/
+*.pyc
+
+# 环境变量
+.env
+.env.*
+
+# Supabase CLI
+.supabase/
+supabase/.temp/
+supabase/.output/
+
+# 编译输出
+dist/
+build/
+
+# 编辑器配置
+.vscode/
+.idea/
+*.swp
+
+# 本地数据
+data/
+files/
+frontend/
+backend/
+zappod-pages/
+cache/
+
+
+# 不上传私钥等敏感信息
+*.key
+*.pem
