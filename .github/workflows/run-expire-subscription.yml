@@ -1,32 +1,19 @@
-name: Run Expire Subscription Function
+name: Run Expire Basic to Free All
 
 on:
-  # ⏰ 注释掉定时触发，当前只支持手动运行
   # schedule:
-  #   - cron: '0 0 * * *'  # 每天 UTC 0 点触发
+  #   - cron: '0 0 * * *'  # ⏰ 每天 UTC 0 点触发
   workflow_dispatch:  # ✅ 手动触发
 
 jobs:
   run:
-    name: 🔁 Call expire-subscription-status
+    name: 🔁 Call expire_basic_to_free_all RPC
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout repository
-        uses: actions/checkout@v3
-
-      - name: 🧪 Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: 📦 Install Supabase CLI
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
-      - name: 🚀 Invoke Supabase Edge Function
+      - name: 📦 Call Supabase RPC
         run: |
-          curl -X POST "https://${{ secrets.SUPABASE_PROJECT_REF }}.functions.supabase.co/expire-subscription-status" \
+          curl -X POST "https://${{ secrets.SUPABASE_PROJECT_REF }}.supabase.co/rest/v1/rpc/expire_basic_to_free_all" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-            -H "Content-Type: application/json"
+            -H "Content-Type: application/json" \
+            -d '{"p_now": "'"$(date -u +"%Y-%m-%dT%H:%M:%SZ")"'", "p_preview": false}'
