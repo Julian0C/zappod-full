@@ -15,5 +15,6 @@ jobs:
         run: |
           curl -X POST "https://${{ secrets.SUPABASE_PROJECT_REF }}.supabase.co/rest/v1/rpc/expire_basic_to_free_all" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{"p_now": "'"$(date -u +"%Y-%m-%dT%H:%M:%SZ")"'", "p_preview": false}'
